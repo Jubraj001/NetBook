@@ -4,6 +4,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser');
 
 const JWT_SECRET = "Jubraj@Dev";
 
@@ -75,6 +76,7 @@ router.post('/login',[
             return res.status(400).json({error: "The credentials entered are incorrect"});
         }
         // Creating Token
+        // Payload
         const data={
             user:{
                 id:user.id
@@ -85,6 +87,20 @@ router.post('/login',[
         // Response the token after creating a new document
         res.json({authToken})
     }catch(error){
+        console.log(error.message);
+        res.status(500).send("Some Error occured");
+    }
+})
+
+// ROUTE 3: Get logged in user's detaisl using POST at "/api/auth/getuser"
+
+router.post('/getuser',fetchuser,async(req,res)=>{
+    try{
+        const userID = req.user.id;
+        const user = await User.findById(userID).select("-password") //All data excluding password
+        res.send(user) 
+    }
+    catch(error){
         console.log(error.message);
         res.status(500).send("Some Error occured");
     }
