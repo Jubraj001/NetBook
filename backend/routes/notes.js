@@ -11,7 +11,7 @@ router.get('/fetchallnotes',fetchuser,async(req,res)=>{
     res.json(notes)
 })
  
-// Router 1: Get all the notes using GET "api/notes/fetchallnotes"
+// Router 2: add new note using POST "api/notes/addnote"
 router.post('/addnote',fetchuser,[
     body('title','Enter a valid title').isLength({min: 3}),
     body('description','Description must be atleast 5 characters').isLength({min: 5})
@@ -30,6 +30,35 @@ router.post('/addnote',fetchuser,[
         })
         const savedNote = await note.save();
         res.json(savedNote);
+    }catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }  
+})
+
+
+// Router 3: update note using PUT "api/notes/updatenote"
+router.put('/updatenote/:id',fetchuser,async(req,res)=>{
+    try{
+        const {title,description,tag} = req.body;
+        // Create a newNote object
+        const newNote = {};
+        if(title) {newNote.title=title};
+        if(description) {newNote.description=description};
+        if(tag) {newNote.tag=tag};
+
+        // Find the note to be updated and update it
+        let note = await Note.findById(req.params.id);
+
+        // If the note to be updated does not exist
+        if(!note) {return res.status(404).send("Not found")};
+
+        // If the user is not the author of the note
+        if(note.user.toString()!==req.user.id) {return res.status(401).send("Not Allowed")}
+
+        note = await Note.findByIdAndUpdate(req.params.id,{$set: newNote},{new:true});
+        res.json({note});
+        
     }catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
