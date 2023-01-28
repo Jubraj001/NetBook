@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Available Routes
 app.use('/api/auth',auth);
-// app.use('/api/notes',notes);
+app.use('/api/notes',notes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

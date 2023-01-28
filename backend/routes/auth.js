@@ -92,8 +92,7 @@ router.post('/login',[
     }
 })
 
-// ROUTE 3: Get logged in user's detaisl using POST at "/api/auth/getuser"
-
+// ROUTE 3: Get logged in user's detais using POST at "/api/auth/getuser"
 router.post('/getuser',fetchuser,async(req,res)=>{
     try{
         const userID = req.user.id;
