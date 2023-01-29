@@ -15,5 +15,5 @@ app.use('/api/auth',auth);
 app.use('/api/notes',notes);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Netbook backend listening on port ${port}`)
 })

@@ -36,7 +36,6 @@ router.post('/addnote',fetchuser,[
     }  
 })
 
-
 // Router 3: update note using PUT "api/notes/updatenote"
 router.put('/updatenote/:id',fetchuser,async(req,res)=>{
     try{
