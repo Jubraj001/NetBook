@@ -1,13 +1,9 @@
-import {useEffect} from 'react';
 import {Link, useLocation} from "react-router-dom";
 
 
 export default function Navbar() {
-    // Whenever the location changes useEffect is run
     const location = useLocation();
-    useEffect(() => {
-        console.log('The location has changed!');
-    }, [location]);
+
   return (
     <>
     <nav className="navbar navbar-expand-lg bg-body-tertiary">

@@ -8,11 +8,10 @@ export default function AddNote() {
     const [note,setNote]=useState({title: "", description:"",tag:"default"});
 
     const onClickHandler =(e)=>{
-        e.preventDefault(); // Prevents the page from reloading
+        // e.preventDefault(); // Prevents the page from reloading
         addNote(note.title,note.description,note.tag);
     }
     const onChange = (e)=>{
-        console.log(e.target.name);
         setNote({...note,[e.target.name]:e.target.value});
     }
     return (
@@ -23,9 +22,13 @@ export default function AddNote() {
         </div>
         <div className="mb-3">
             <label htmlFor="description" className="form-label">Description</label>
-            <textarea className="form-control" name="description" id="description" rows="3" onChange={onChange}></textarea>
+            <textarea className="form-control" name="description" id="description" rows="3" placeholder="Description of the note" onChange={onChange}></textarea>
         </div>
-        <button type="submit" className="btn btn-primary" onClick = {onClickHandler}>Submit</button>
+        <div className="mb-3">
+            <label htmlFor="tag" className="form-label">Note Tag</label>
+            <input type="text" className="form-control" name="tag" id="tag" onChange={onChange} placeholder="Tag of the note"/>
+        </div>
+        <button type="submit" className="btn btn-primary" onClick = {onClickHandler}>Add Note</button>
     </>
     )
 }
