@@ -6,7 +6,7 @@ const NoteState = (props)=>{
         {
             "_id": "61322f195153781a8ca8d0e06",
             "user": "6131dc5e3e4037cd4734a066",
-            "title": "My Title",
+            "title": "My Title1",
             "description": "Please wake up early",
             "tag": "personal",
             "date": "2021-09-03T14:20:09.509Z",
@@ -15,7 +15,7 @@ const NoteState = (props)=>{
           {
             "_id": "61322f195531781a8ca8d0e08",
             "user": "6131dc5e3e4037cd4734a066",
-            "title": "My Title",
+            "title": "My Title2",
             "description": "Please wake up early",
             "tag": "personal",
             "date": "2021-09-03T14:20:09.668Z",
@@ -24,7 +24,7 @@ const NoteState = (props)=>{
           {
             "_id": "61322f19553781a8ca8d0e081",
             "user": "6131dc5e3e4037cd4734a066",
-            "title": "My Title",
+            "title": "My Title3",
             "description": "Please wake up early",
             "tag": "personal",
             "date": "2021-09-03T14:20:09.668Z",
@@ -33,7 +33,7 @@ const NoteState = (props)=>{
           {
             "_id": "61322f19553781a8ca8d0e082",
             "user": "6131dc5e3e4037cd4734a066",
-            "title": "My Title",
+            "title": "My Title4",
             "description": "Please wake up early",
             "tag": "personal",
             "date": "2021-09-03T14:20:09.668Z",
@@ -42,7 +42,7 @@ const NoteState = (props)=>{
           {
             "_id": "61322f195537812a8ca8d0e08",
             "user": "6131dc5e3e4037cd4734a066",
-            "title": "My Title",
+            "title": "My Title5",
             "description": "Please wake up early",
             "tag": "personal",
             "date": "2021-09-03T14:20:09.668Z",
@@ -51,7 +51,7 @@ const NoteState = (props)=>{
           {
             "_id": "613222f19553781a8ca8d0e08",
             "user": "6131dc5e3e4037cd4734a066",
-            "title": "My Title",
+            "title": "My Title6",
             "description": "Please wake up early",
             "tag": "personal",
             "date": "2021-09-03T14:20:09.668Z",
@@ -60,7 +60,7 @@ const NoteState = (props)=>{
           {
             "_id": "61322f119553781a8ca8d0e08",
             "user": "6131dc5e3e4037cd4734a066",
-            "title": "My Title",
+            "title": "My Title7",
             "description": "Please wake up early",
             "tag": "personal",
             "date": "2021-09-03T14:20:09.668Z",
@@ -84,8 +84,9 @@ const NoteState = (props)=>{
     }
 
     // Deleting a note
-    const deleteNote=()=>{
-
+    const deleteNote=(id)=>{
+        const newNotes = notes.filter((note)=>{return note._id!==id});
+        setNotes(newNotes);
     }
 
     // Edit a note

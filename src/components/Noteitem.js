@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import noteContext from '../context/notes/noteContext'
 
 export default function NoteItem(props) {
   const {note}=props;
+  const context = useContext(noteContext);
+  const {deleteNote} = context;
   const onClickHandler=()=>{
-    
+    deleteNote(note._id);
   }
   return (
     <div className="col-md-3 my-2">
