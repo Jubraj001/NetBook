@@ -17,7 +17,8 @@ export default function AddNote(props) {
     }
     return (
     <>
-        <div className="mb-3">
+        <h2>Add your note</h2>
+        <div className="mb-3 my-3">
             <label htmlFor="title" className="form-label">Note Title</label>
             <input type="text" className="form-control" name="title" id="title" onChange={onChange} value={note.title} placeholder="Title of the note"/>
         </div>

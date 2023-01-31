@@ -77,7 +77,7 @@ export default function Notes(props) {
     </div>
     <div className="row my-3">
         <h2>Your notes</h2>
-        {notes.length===0 && "No notes to show"}
+        {notes.length===0 && <div className="mx-2">No notes to show</div>}
         {/* Providing Unique key*/}
         {notes.map((note)=>{
             return <NoteItem key={note._id} note={note} updateNote={updateNote} showAlert={props.showAlert}/>

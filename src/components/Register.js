@@ -30,7 +30,8 @@ export default function Register(props) {
   }
 return (
   <div>
-      <div className="mb-3">
+      <h2>Register to continue to Netbook</h2>
+      <div className="mb-3 my-3">
           <label htmlFor="email" className="form-label">Email address</label>
           <input type="email" className="form-control" id="email" name="email" placeholder="Email" onChange={onChange}/>
       </div>
