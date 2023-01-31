@@ -14,18 +14,19 @@ router.post('/register',[
     body('name','Enter a valid name').isLength({min: 3}),
     body('password','Password must be atleast 5 characters').isLength({min: 5})
 ],async (req,res)=>{
+    let success=false;
     // If the parameters (email,name,password) doesn't satisfy the requirements given in the array 
     // Done with the help of express validator
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() ,error:"Certain fields are empty or incorrect"});
     }
     // Check whether the user with this email exists already
     try{
         let user = await User.findOne({email:req.body.email});
         // If user!=NULL then give error message
         if(user){
-            return res.status(400).json({error: "Sorry a user with this email already exists"})
+            return res.status(400).json({success,error: "Sorry a user with this email already exists"})
         }
         // Securing the password
         const salt = await bcrypt.genSaltSync(10);
@@ -45,7 +46,7 @@ router.post('/register',[
         const authToken = jwt.sign(data,JWT_SECRET);
 
         // Response the token after creating a new document
-        res.json({authToken})
+        res.json({success:true,authToken})
     }catch(error){
         console.log(error.message);
         res.status(500).send("Some Error occured");
@@ -57,6 +58,7 @@ router.post('/login',[
     body('email','Enter a valid email').isEmail(),
     body('password','Password cannot be blank').exists()
 ],async (req,res)=>{
+    let success=false;
     // If the parameters (email,name,password) doesn't satisfy the requirements given in the array 
     // Done with the help of express validator
     const errors = validationResult(req);
@@ -69,11 +71,11 @@ router.post('/login',[
         let user = await User.findOne({email});
         // If user!=NULL then give error message
         if(!user){
-            return res.status(400).json({error: "The credentials entered are incorrect"});
+            return res.status(400).json({success,error: "The credentials entered are incorrect"});
         }
         const passwordCompare = await bcrypt.compare(password,user.password);
         if(!passwordCompare){
-            return res.status(400).json({error: "The credentials entered are incorrect"});
+            return res.status(400).json({success,error: "The credentials entered are incorrect"});
         }
         // Creating Token
         // Payload
@@ -85,7 +87,7 @@ router.post('/login',[
         const authToken = jwt.sign(data,JWT_SECRET);
 
         // Response the token after creating a new document
-        res.json({authToken})
+        res.json({success:true,authToken})
     }catch(error){
         console.log(error.message);
         res.status(500).send("Some Error occured");

@@ -68,6 +68,7 @@ export default function Notes() {
     </div>
     <div className="row my-3">
         <h2>Your notes</h2>
+        {notes.length===0 && "No notes to show"}
         {/* Providing Unique key*/}
         {notes.map((note)=>{
             return <NoteItem key={note._id} note={note} updateNote={updateNote}/>
