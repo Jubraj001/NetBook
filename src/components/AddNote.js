@@ -1,7 +1,7 @@
 import React, {useContext,useState} from 'react'
 import noteContext from '../context/notes/noteContext'
 
-export default function AddNote() {
+export default function AddNote(props) {
     const context = useContext(noteContext);
     const {addNote} = context;   
 
@@ -29,7 +29,7 @@ export default function AddNote() {
             <label htmlFor="tag" className="form-label">Note Tag</label>
             <input type="text" className="form-control" name="tag" id="tag" onChange={onChange} value={note.tag} placeholder="Tag of the note"/>
         </div>
-        <button type="submit" className="btn btn-primary" onClick = {onClickHandler}>Add Note</button>
+        <button type="submit" disabled={note.title.length<3 || note.description.length<5} className="btn btn-primary" onClick = {onClickHandler}>Add Note</button>
     </>
     )
 }

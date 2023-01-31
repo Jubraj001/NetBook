@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login(props) {
     const [credentials,setCredentials] = useState({email:"",password:""});
     let navigate = useNavigate();
     const onClickHandler=async()=>{
@@ -13,16 +13,16 @@ export default function Login() {
             body:JSON.stringify(credentials)
         });
         const json = await response.json();
-        console.log(json.authToken)
         if(json.success)
         {
             // Save the auth token
             localStorage.setItem('token',json.authToken);
             // Navigate to the home page
             navigate("/");
+            props.showAlert("Logged in successfully","success")
         }
         else{
-            alert("Invalid Credentials");
+            props.showAlert("Invalid Credentials","danger");
         }
     }
     const onChange = (e)=>{
@@ -38,7 +38,7 @@ export default function Login() {
             <label htmlFor="password" className="form-label">Password</label>
             <input type="password" className="form-control" id="password" name="password" placeholder="Password" onChange={onChange}/>
         </div>
-        <button className="btn btn-primary" onClick={onClickHandler}>Submit</button>
+        <button className="btn btn-primary" onClick={onClickHandler}>Login</button>
     </div>
   )
 }

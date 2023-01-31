@@ -1,14 +1,22 @@
 import React, {useContext, useEffect, useRef,useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import NoteContext from'../context/notes/noteContext'
 import AddNote from './AddNote';
 import NoteItem from './Noteitem';
 
-export default function Notes() {
+export default function Notes(props) {
     const context = useContext(NoteContext);
     const {notes,getNotes,editNote} = context;
+    let navigate = useNavigate();
     useEffect(()=>{
       // Using useEffect as componentdidMount in class based components
-      getNotes();
+      if(!localStorage.getItem('token')) {
+        navigate('/login')
+      }
+      else
+      {
+        getNotes();
+      }
       // eslint-disable-next-line
     },[])
 
@@ -26,13 +34,14 @@ export default function Notes() {
       // addNote(note.title,note.description,note.tag);
       editNote(note.id,note.etitle,note.edescription,note.etag); 
       refClose.current.click();
+      props.showAlert("Edited Successfully","success")
   }
   const onChange = (e)=>{
       setNote({...note,[e.target.name]:e.target.value});
   }
   return (
     <>
-    <AddNote/>
+    <AddNote showAlert={props.showAlert}/>
     {/* Edit Note Modal */}
     <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Launch demo modal
@@ -71,7 +80,7 @@ export default function Notes() {
         {notes.length===0 && "No notes to show"}
         {/* Providing Unique key*/}
         {notes.map((note)=>{
-            return <NoteItem key={note._id} note={note} updateNote={updateNote}/>
+            return <NoteItem key={note._id} note={note} updateNote={updateNote} showAlert={props.showAlert}/>
         })}
     </div>
     </>

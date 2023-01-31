@@ -1,11 +1,10 @@
 import React , {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export default function Register() {
+export default function Register(props) {
   const [credentials,setCredentials] = useState({name:"",email:"",password:""});
   let navigate = useNavigate();
   const onClickHandler=async()=>{
-      console.log(credentials)
       const response = await fetch(`http://localhost:5000/api/auth/register`, {
           method: 'POST',
           headers: {
@@ -14,16 +13,16 @@ export default function Register() {
           body:JSON.stringify(credentials)
       });
       const json = await response.json();
-      console.log(json.authToken)
       if(json.success)
       {
           // Save the auth token
           localStorage.setItem('token',json.authToken);
           // Navigate to the home page
           navigate("/");
+          props.showAlert("Account created successfully","success")
       }
       else{
-          alert(json.error);
+          props.showAlert(json.error,"danger");
       }
   }
   const onChange = (e)=>{
@@ -43,7 +42,7 @@ return (
           <label htmlFor="password" className="form-label">Password</label>
           <input type="password" className="form-control" id="password" name="password" placeholder="Password" onChange={onChange}/>
       </div>
-      <button className="btn btn-primary" onClick={onClickHandler}>Submit</button>
+      <button className="btn btn-primary" disabled={credentials.name.length<3 || credentials.password.length<5} onClick={onClickHandler}>Register</button>
   </div>
 )
 }
