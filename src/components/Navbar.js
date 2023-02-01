@@ -21,9 +21,6 @@ export default function Navbar() {
                 <li className="nav-item">
                 <Link className={`nav-link ${location.pathname==='/'?'active':''}`} aria-current="page" to="/">Home</Link>
                 </li>
-                <li className="nav-item">
-                <Link className={`nav-link ${location.pathname==='/about'?'active':''}`} to="/about">About</Link>
-                </li>
             </ul>
             {!localStorage.getItem('token')?<form className="d-flex" role="search">
                 <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
